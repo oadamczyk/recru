@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: utf-8
+  host: <%= Rec.config.postgres.host %>
+  username: <%= Rec.config.postgres.username %>
+  password: <%= Rec.config.postgres.password %>
+  database: <%= Rec.config.postgres.database %>
+  port: <%= Rec.config.postgres.port %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: <%= Rec.config.postgres.database %>_test
+  min_messages: error
+

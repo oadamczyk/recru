@@ -1,0 +1,23 @@
+version: "3.4"
+services:
+  rec_db:
+    volumes:
+      - /var/lib/postgresql/data
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_USER: rec
+      POSTGRES_PASSWORD: rec
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    command: -p 25432
+    ports:
+      - "25432:25432"
+
+  rec:
+    build:
+      context: .
+      dockerfile: ./rec/Dockerfile
+    env_file: ./rec/.env.example
+    environment:
+      - PORT=3000
+    volumes:
+      - ./rec:/app
